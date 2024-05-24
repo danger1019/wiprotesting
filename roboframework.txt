@@ -1,0 +1,125 @@
+* Settings *
+Library     SeleniumLibrary
+
+#Admin email: admin@yourstore.com
+#Admin password: admin
+* Variables *
+${LOGIN_URL}    http://admin-demo.nopcommerce.com
+${BROWSER}      Chrome
+${username}     admin@yourstore.com
+${password}     admin
+
+* Keywords *
+* Test Cases *
+Open my Browser
+    open browser    ${LOGIN_URL}    ${BROWSER}
+    maximize browser window
+
+Open Login Page
+     go to    ${LOGIN_URL}
+Input user
+#    [Arguments]    ${username}
+    input text    xpath://input[@id='Email']     ${username}
+Input pwd
+#    [Arguments]    ${password}
+    input text    xpath://input[@id='Password']    ${password}
+Click Login Button
+     click element  xpath://button[contains(text(),'Log in')]
+Page should wait few seconds
+      sleep    10s
+click Logout Button
+     click element   xpath://a[contains(text(),'Logout')]
+Error message should be visible
+     page should contain    Login was unsuccessful
+DashPage Page should be visible
+      page should contain    Dashboard
+close my Browser
+    close all browsers
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------
+* Settings *
+Library     SeleniumLibrary
+
+* Variables *
+${LOGIN_URL}    http://admin-demo.nopcommerce.com
+${BROWSER}      Chrome
+
+* Keywords *
+Open my Browser
+    open browser    ${LOGIN_URL}    ${BROWSER}
+    maximize browser window
+Open Login Page
+     go to    ${LOGIN_URL}
+Input user
+    [Arguments]    ${username}
+    input text    xpath://input[@id='Email']     ${username}
+Input pwd
+    [Arguments]    ${password}
+    input text    xpath://input[@id='Password']    ${password}
+Click Login Button
+     click element  xpath://button[contains(text(),'Log in')]
+Page should wait few seconds
+      sleep    10s
+click Logout Button
+     click element   xpath://a[contains(text(),'Logout')]
+Error message should be visible
+     page should contain    Login was unsuccessful
+DashPage Page should be visible
+      page should contain    Dashboard
+close my Browser
+    close all browsers
+
+----------------------------------------------------------
+
+* Settings *
+Library     SeleniumLibary
+Resource    ../Resources/LoginData.Robot
+
+Suite Setup     Open my Browser
+Suite Teardown  close my Browser
+
+Test Template    Invalid Login
+
+* Test Cases *                  USERNAME                  PASSWORD
+Right User Empty pass              admin@yourstore.com         ${EMPTY}
+Right User Wrong pass              admin@yourstore.com          adminOne
+Wrong User Right pass              admin123@yourstore.com        admin
+Wrong user empty pass              adm1@yourstore.com           admin1001
+Wrong User wrong pass              admin@123.com                admin123
+
+
+* Keywords *
+Invalid Login
+    [Arguments]    ${username}      ${password}
+    Input User         ${username}
+    Input pwd           ${password}
+    Click Login Button
+    Error message should be visible
